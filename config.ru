@@ -9,6 +9,8 @@ configure do
      # This method is run before accessing any resource.
     end
   end
+  # set fh stats as default view
+  set :default_dashboard, 'formhub'
 end
 
 map Sinatra::Application.assets_prefix do
