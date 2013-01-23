@@ -1,8 +1,14 @@
 <% content_for(:title) { "Formhub dashboard" } %>
 <div class="gridster">
   <ul>
-    <li data-row="1" data-col="1" data-sizex="3" data-sizey="1">
-      <div data-id="submissions" data-view="Graph" data-title="Submissions" style="background-color:#ff9618"></div>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="submissions_per_day" data-view="Graph" data-title="Submissions Per Day" style="background-color:#ff9618"></div>
+    </li>
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
+      <div data-id="submissions_per_hour" data-view="Graph" data-title="Submissions Per Hour" style="background-color:#ec663c"></div>
+    </li>
+    <li data-row="2" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="diskspace" data-view="Meter" data-title="Available Disk Space" data-min="0" data-max="40960"></div>
     </li>
   </ul>
 </div>
