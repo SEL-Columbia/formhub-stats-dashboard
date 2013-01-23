@@ -1,6 +1,7 @@
 require "rest-client"
 require "json"
 require "date"
+require "uri"
 
 class Graphite
     # Pass in the url to where you graphite instance is hosted
@@ -17,7 +18,7 @@ class Graphite
     # JSON from the Graphite and parse it
     def query(name, since=nil)
         since ||= '-2min'
-        url = "#{@url}/render?format=json&target=#{name}&from=#{since}"
+        url = URI.escape("#{@url}/render?format=json&target=#{name}&from=#{since}")
         response = RestClient.get url
         result = JSON.parse(response.body, :symbolize_names => true)
         return result.first
@@ -33,8 +34,9 @@ class Graphite
         points = []
         count = 1
         
-        (datapoints.select { |el| not el[0].nil? }).each do|item|
-            points << { x: count, y: get_value(item)}
+        #(datapoints.select { |el| not el[0].nil? }).each do|item|
+        datapoints.each do|item|
+            points << { x: item[1], y: get_value(item)}
             count += 1
         end
         
