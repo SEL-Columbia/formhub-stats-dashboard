@@ -13,6 +13,11 @@ class Graphite
         value = datapoint[0] || 0
         return value.round(2)
     end
+
+    # given an array of data and timestamp return a hash of x: timestamp, y: data value
+    def format_point(datapoint)
+        return { x: datapoint[1], y: get_value(datapoint)}
+    end
     
     # This is the raw query method, it will fetch the
     # JSON from the Graphite and parse it
@@ -36,11 +41,22 @@ class Graphite
         
         #(datapoints.select { |el| not el[0].nil? }).each do|item|
         datapoints.each do|item|
-            points << { x: item[1], y: get_value(item)}
+            points << format_point(item)
             count += 1
         end
         
         return points
+    end
+
+    def multi_values(name, since=nil)
+        stats = query name, since
+       
+        items = []
+        stats.each do |stat|
+            items << { target: stat[:target], value: stat[:datapoints].first[0]}
+        end
+        
+        return items
     end
     
     # Not all Dashing widgets need a set of points, often just
