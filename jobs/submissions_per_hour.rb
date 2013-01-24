@@ -8,7 +8,7 @@ SCHEDULER.every '10s', :first_in => 0 do
     stat_name = "summarize(stats_counts.response.201,\"1hour\",\"sum\",false)"
     
     # get points for the last half hour
-    points = q.points stat_name, "-1day"
+    points = q.points stat_name, "-12hours"
     
     # send to dashboard, so the number the meter and the graph widget can understand it
     send_event 'submissions_per_hour', { points: points }
