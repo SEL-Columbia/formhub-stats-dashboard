@@ -1,7 +1,7 @@
 require "./lib/graphite"
 
 # last started parkingsessions
-SCHEDULER.every '10s', :first_in => 0 do
+SCHEDULER.every '1m', :first_in => 0 do
     # Create an instance of our helper class
     q = Graphite.new "http://graphite.formhub.org/"
     
