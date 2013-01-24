@@ -21,7 +21,7 @@ class Graphite
         url = URI.escape("#{@url}/render?format=json&target=#{name}&from=#{since}")
         response = RestClient.get url
         result = JSON.parse(response.body, :symbolize_names => true)
-        return result.first
+        return result
     end
     
     # This is high-level function that will fetch a set of datapoints
@@ -29,7 +29,7 @@ class Graphite
     # graph widget of Dashing can understand
     def points(name, since=nil)
         stats = query name, since
-        datapoints = stats[:datapoints]
+        datapoints = stats.first[:datapoints]
         
         points = []
         count = 1
@@ -48,7 +48,7 @@ class Graphite
     # the value for last point-in-time and returns it
     def value(name, since=nil)
         stats = query name, since
-        last = (stats[:datapoints].select { |el| not el[0].nil? }).last
+        last = stats.first[:datapoints].last
         
         return get_value(last)
     end
